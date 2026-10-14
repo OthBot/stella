@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>À ma sœur de cœur 💛</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #e1bee7 100%);
+    min-height: 100vh;
+    color: #4a2c3a;
+    overflow-x: hidden;
+  }
+
+  /* ---- Page d'accueil ---- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-family: 'Brush Script MT', cursive;
+    color: #ad1457;
+    margin-bottom: 1rem;
+    animation: fadeInDown 1.5s ease;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #6a1b4d;
+    margin-bottom: 2rem;
+    animation: fadeIn 2s ease;
+  }
+
+  .scroll-btn {
+    background: #ad1457;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 25px rgba(173, 20, 87, 0.4);
+  }
+
+  /* ---- Carrousel ---- */
+  .carousel-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1rem;
+  }
+
+  .carousel {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    aspect-ratio: 4 / 5;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    background: white;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .slide.active {
+    opacity: 1;
+  }
+
+  .slide img {
+    width: 100%;
+    height: 75%;
+    object-fit: cover;
+  }
+
+  .slide .caption {
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+    font-style: italic;
+    color: #6a1b4d;
+    font-size: 1.1rem;
+    background: #fff0f5;
+  }
+
+  /* ---- Contrôles ---- */
+  .controls {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    align-items: center;
+  }
+
+  .controls button {
+    background: white;
+    border: 2px solid #ad1457;
+    color: #ad1457;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .controls button:hover {
+    background: #ad1457;
+    color: white;
+  }
+
+  .dots {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(173, 20, 87, 0.3);
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .dot.active {
+    background: #ad1457;
+  }
+
+  /* ---- Message final ---- */
+  .final-message {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .message-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 3rem 2rem;
+    border-radius: 25px;
+    max-width: 650px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+
+  .message-card p {
+    font-size: 1.25rem;
+    line-height: 2;
+    color: #4a2c3a;
+    font-style: italic;
+  }
+
+  .message-card .signature {
+    margin-top: 2rem;
+    font-family: 'Brush Script MT', cursive;
+    font-size: 1.8rem;
+    color: #ad1457;
+  }
+
+  .thank-btn {
+    margin-top: 2rem;
+    background: #ad1457;
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .thank-btn:hover {
+    transform: scale(1.1);
+  }
+
+  /* ---- Cœurs flottants ---- */
+  .heart {
+    position: fixed;
+    font-size: 1.5rem;
+    pointer-events: none;
+    animation: floatUp 3s ease-out forwards;
+    z-index: 1000;
+  }
+
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-200px) scale(1.5); }
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Page d'accueil -->
+  <section class="hero">
+    <h1>À ma sœur de cœur</h1>
+    <p>Quelques souvenirs, quelques mots… pour toi 💛</p>
+    <button class="scroll-btn" onclick="document.querySelector('.carousel-section').scrollIntoView({behavior:'smooth'})">
+      Découvrir ↓
+    </button>
+  </section>
+
+  <!-- Carrousel -->
+  <section class="carousel-section">
+    <div class="carousel" id="carousel">
+
+      <div class="slide active">
+        <img src="images/images4.jpg" alt="Souvenir 1">
+        <div class="caption">Le début de notre belle amitié 🌸</div>
+      </div>
+
+      <div class="slide">
+        <img src="images/images2.jpg" alt="Souvenir 2">
+        <div class="caption">Nos fous rires inoubliables 😂</div>
+      </div>
+
+      <div class="slide">
+        <img src="images/images3.jpg" alt="Souvenir 3">
+        <div class="caption">Les moments où tout allait bien… et les autres aussi 💪</div>
+      </div>
+
+      <div class="slide">
+        <img src="images/images1.jpg" alt="Souvenir 4">
+        <div class="caption">Et tout ce qu'il nous reste à vivre ✨</div>
+      </div>
+      <div class="slide">
+        <img src="images/images5.jpg" alt="Souvenir 5">
+        <div class="caption">Et tout ce qu'il nous reste à vivre ✨</div>
+      </div>
+       <div class="slide">
+        <img src="images/images6.jpg" alt="Souvenir 6">
+        <div class="caption">Et tout ce qu'il nous reste à vivre ✨</div>
+      </div>
+       <div class="slide">
+        <img src="images/images7.png" alt="Souvenir 7">
+        <div class="caption">Et tout ce qu'il nous reste à vivre ✨</div>
+      </div>
+       <div class="slide">
+        <img src="images/images8.jpg" alt="Souvenir 8">
+        <div class="caption">Et tout ce qu'il nous reste à vivre ✨</div>
+      </div>
+
+    </div>
+
+    <div class="controls">
+      <button onclick="prevSlide()">‹</button>
+      <div class="dots" id="dots"></div>
+      <button onclick="nextSlide()">›</button>
+    </div>
+  </section>
+
+  <!-- Message final -->
+  <section class="final-message">
+    <div class="message-card">
+      <p>
+        Une amie, une sœur d'une autre mère,<br>
+        ça se célèbre.<br><br>
+        On ne se le dit peut-être pas tous les jours,<br>
+        mais les bons amis sont rares.<br><br>
+        Merci d'être parmi les miens. 💛
+      </p>
+      <div class="signature">Pour toi, avec tout mon cœur</div>
+      <button class="thank-btn" onclick="showerHearts()">Je t'aime fort 💛</button>
+    </div>
+  </section>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotsContainer = document.getElementById('dots');
+  let current = 0;
+
+  // Créer les points
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll('.dot');
+
+  function goToSlide(index) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = index;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function nextSlide() {
+    goToSlide((current + 1) % slides.length);
+  }
+
+  function prevSlide() {
+    goToSlide((current - 1 + slides.length) % slides.length);
+  }
+
+  // Défilement automatique
+  setInterval(nextSlide, 5000);
+
+  // Pluie de cœurs
+  function showerHearts() {
+    for (let i = 0; i < 30; i++) {
+      setTimeout(() => {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = ['💛','💖','💕','🌸','✨'][Math.floor(Math.random()*5)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = '100vh';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+      }, i * 80);
+    }
+  }
+</script>
+
+</body>
+</html>
